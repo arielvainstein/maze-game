@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 import _isEqual from "lodash.isequal";
 import classNames from "classnames";
@@ -21,7 +21,7 @@ const maze = [
 ];
 
 const getMazeExits = () => {
-  let indexes: any[] = [];
+  let indexes: number[][] = [];
 
   const topEscapeIndex = maze[0].findIndex((el) => el === 1);
   const bottomEscapeIndex = maze[maze.length - 1].findIndex((el) => el === 1);
@@ -46,32 +46,29 @@ const getMazeExits = () => {
 
 export const Maze: React.FC = () => {
   const [currentPosition, setCurrentPosition] = useState<number[]>([]);
-  const mazeExits = React.useMemo(() => getMazeExits(), [maze]);
+  const mazeExits = useMemo(() => getMazeExits(), [maze]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (mazeExits?.length === 2) {
-      // Set current position in starting point on component load
       setCurrentPosition(mazeExits[0]);
     }
   }, []);
 
   const handleMove = (e: any) => {
     e.preventDefault();
-
     const key = e.code;
-
+    
     const [i, j] = currentPosition;
-    if (key === "ArrowUp" && maze[i][j] === 1) {
+    if (key === "ArrowUp" && maze[i - 1][j] === 1) {
       setCurrentPosition([i - 1, j]);
     }
-    if (key === "ArrowRight" && maze[i][j] === 1) {
-      debugger;
+    if (key === "ArrowRight" && maze[i][j + 1] === 1) {
       setCurrentPosition([i, j + 1]);
     }
-    if (key === "ArrowDown" && maze[i][j] === 1) {
+    if (key === "ArrowDown" && maze[i + 1][j] === 1) {
       setCurrentPosition([i + 1, j]);
     }
-    if (key === "ArrowLeft" && maze[i][j] === 1) {
+    if (key === "ArrowLeft" && maze[i][j - 1] === 1) {
       setCurrentPosition([i, j - 1]);
     }
   };
