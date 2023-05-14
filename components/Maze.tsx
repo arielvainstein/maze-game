@@ -57,15 +57,15 @@ export const Maze: React.FC = () => {
   const handleMove = (e: any) => {
     e.preventDefault();
     const key = e.code;
-    
+
     const [i, j] = currentPosition;
-    if (key === "ArrowUp" && maze[i - 1][j] === 1) {
+    if (key === "ArrowUp" && !!maze[i - 1] && maze[i - 1][j] === 1) {
       setCurrentPosition([i - 1, j]);
     }
     if (key === "ArrowRight" && maze[i][j + 1] === 1) {
       setCurrentPosition([i, j + 1]);
     }
-    if (key === "ArrowDown" && maze[i + 1][j] === 1) {
+    if (key === "ArrowDown" && !!maze[i + 1] && maze[i + 1][j] === 1) {
       setCurrentPosition([i + 1, j]);
     }
     if (key === "ArrowLeft" && maze[i][j - 1] === 1) {
