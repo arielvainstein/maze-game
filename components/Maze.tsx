@@ -20,7 +20,7 @@ const maze = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-const getMazeExits = () => {
+const getMazeStartAndFinishPoints = () => {
   let indexes: number[][] = [];
 
   const topEscapeIndex = maze[0].findIndex((el) => el === 1);
@@ -45,8 +45,9 @@ const getMazeExits = () => {
 };
 
 export const Maze: React.FC = () => {
-  const [currentPosition, setCurrentPosition] = useState<number[]>([]);
-  const mazeExits = useMemo(() => getMazeExits(), [maze]);
+  const mazeExits = useMemo(() => getMazeStartAndFinishPoints(), [maze]);
+  const [currentPosition, setCurrentPosition] = useState<number[]>([0,0]);
+  const [moves, setMoves] = useState(0);
 
   useEffect(() => {
     if (mazeExits?.length === 2) {
@@ -61,45 +62,64 @@ export const Maze: React.FC = () => {
     const [i, j] = currentPosition;
     if (key === "ArrowUp" && !!maze[i - 1] && maze[i - 1][j] === 1) {
       setCurrentPosition([i - 1, j]);
+      setMoves((moves) => (moves += 1));
     }
     if (key === "ArrowRight" && maze[i][j + 1] === 1) {
       setCurrentPosition([i, j + 1]);
+      setMoves((moves) => (moves += 1));
     }
     if (key === "ArrowDown" && !!maze[i + 1] && maze[i + 1][j] === 1) {
       setCurrentPosition([i + 1, j]);
+      setMoves((moves) => (moves += 1));
     }
     if (key === "ArrowLeft" && maze[i][j - 1] === 1) {
       setCurrentPosition([i, j - 1]);
+      setMoves((moves) => (moves += 1));
     }
   };
 
   return (
-    <div className="App" onKeyDown={handleMove} tabIndex={-1}>
-      <table id="maze">
-        <tbody>
-          {maze.map((row, i) => (
-            <tr key={`row-${i}`}>
-              {row.map((cell, j) => (
-                <td
-                  key={`cell-${i}-${j}`}
-                  className={classNames(styles[`status${cell}`], {
-                    [styles.startStep]: _isEqual([i, j], mazeExits[0]),
-                    [styles.endStep]: _isEqual([i, j], mazeExits[1]),
-                  })}
-                >
-                  <div
-                    className={
-                      _isEqual([i, j], currentPosition)
-                        ? styles.currentStep
-                        : ""
-                    }
-                  />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div>
+        <h1>Maze game</h1>
+        <p>
+          Use your keyboard arrows to navigate through the maze and get to the
+          exit.
+        </p>
+        <div className={styles.moves}>
+          <span>Moves: {moves}</span>
+        </div>
+        <table
+          onKeyDown={handleMove}
+          autoFocus
+          tabIndex={0}
+          className={styles.maze}
+        >
+          <tbody>
+            {maze.map((row, i) => (
+              <tr key={`row-${i}`}>
+                {row.map((cell, j) => (
+                  <td
+                    key={`cell-${i}-${j}`}
+                    className={classNames(styles[`status${cell}`], {
+                      [styles.startStep]: _isEqual([i, j], mazeExits[0]),
+                      [styles.endStep]: _isEqual([i, j], mazeExits[1]),
+                    })}
+                  >
+                    <div
+                      className={
+                        _isEqual([i, j], currentPosition)
+                          ? styles.currentStep
+                          : ""
+                      }
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
