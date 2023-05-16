@@ -1,9 +1,16 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
 
+import { Modal } from "@/components/Modal";
 import _isEqual from "lodash.isequal";
 import classNames from "classnames";
 import styles from "./Maze.module.scss";
+
+enum GameStatusEnum {
+  PLAYING = "playing",
+  FINISHED = "finished",
+}
 
 const maze = [
   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -46,8 +53,11 @@ const getMazeStartAndFinishPoints = () => {
 
 export const Maze: React.FC = () => {
   const mazeExits = useMemo(() => getMazeStartAndFinishPoints(), [maze]);
-  const [currentPosition, setCurrentPosition] = useState<number[]>([0,0]);
+  const [currentPosition, setCurrentPosition] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
+  const [gameStatus, setGameStatus] = useState<GameStatusEnum>(
+    GameStatusEnum.PLAYING
+  );
 
   useEffect(() => {
     if (mazeExits?.length === 2) {
@@ -55,11 +65,27 @@ export const Maze: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const iWon = _isEqual(currentPosition, mazeExits[1]);
+    if (iWon) {
+      setGameStatus(GameStatusEnum.FINISHED);
+    }
+  }, [currentPosition]);
+
+  const resetGame = () => {
+    setGameStatus(GameStatusEnum.PLAYING);
+    setCurrentPosition(mazeExits[0]);
+    setMoves(0);
+  };
+
   const handleMove = (e: any) => {
     e.preventDefault();
     const key = e.code;
 
+    if (gameStatus === GameStatusEnum.FINISHED) return;
+
     const [i, j] = currentPosition;
+
     if (key === "ArrowUp" && !!maze[i - 1] && maze[i - 1][j] === 1) {
       setCurrentPosition([i - 1, j]);
       setMoves((moves) => (moves += 1));
@@ -101,17 +127,13 @@ export const Maze: React.FC = () => {
                 {row.map((cell, j) => (
                   <td
                     key={`cell-${i}-${j}`}
-                    className={classNames(styles[`status${cell}`], {
-                      [styles.startStep]: _isEqual([i, j], mazeExits[0]),
-                      [styles.endStep]: _isEqual([i, j], mazeExits[1]),
-                    })}
+                    className={styles[`status${cell}`]}
                   >
                     <div
-                      className={
-                        _isEqual([i, j], currentPosition)
-                          ? styles.currentStep
-                          : ""
-                      }
+                      className={classNames({
+                        [styles.currentStep]: _isEqual([i, j], currentPosition),
+                        [styles.finishLine]: _isEqual([i, j], mazeExits[1]),
+                      })}
                     />
                   </td>
                 ))}
@@ -120,6 +142,21 @@ export const Maze: React.FC = () => {
           </tbody>
         </table>
       </div>
+      {gameStatus === GameStatusEnum.FINISHED && (
+        <Modal
+          title="Amazing, you won!"
+          subtitle={`You solved the maze in ${moves} moves`}
+          onClick={resetGame}
+          onClose={resetGame}
+        >
+          <Image
+            src="/icon-party.svg"
+            alt="PARTY ICON"
+            width={300}
+            height={300}
+          />
+        </Modal>
+      )}
     </>
   );
 };
