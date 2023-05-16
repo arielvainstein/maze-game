@@ -4,13 +4,14 @@ import styles from "./Button.module.scss";
 
 type Props = {
   onClick: () => void;
-  text: string;
+  children: React.ReactNode;
+  className?: string;
 };
 
-export const Button: React.FC<Props> = ({ onClick, text }, props) => {
+export const Button: React.FC<Props> = ({ onClick, children }, props) => {
   return (
     <button type="button" className={styles.button} onClick={onClick} {...props}>
-      {text}
+      {children}
     </button>
   );
 };

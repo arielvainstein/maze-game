@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
+
 import Image from "next/image";
 import { Button } from "@/components/Button";
+import { CloseIcon } from "./components/CloseIcon";
 
 import styles from "./Modal.module.scss";
 
@@ -10,7 +12,7 @@ type Props = {
   title: string;
   subtitle?: string;
   onClose: () => void;
-  onClick: () => void;
+  buttonText: string;
 };
 
 export const Modal: React.FC<Props> = ({
@@ -18,11 +20,11 @@ export const Modal: React.FC<Props> = ({
   title,
   subtitle,
   onClose,
-  onClick,
+  buttonText,
 }) => {
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" || e.key === "Enter") {
         onClose();
       }
     });
@@ -36,14 +38,16 @@ export const Modal: React.FC<Props> = ({
   return (
     <div className={styles.container}>
       <div className={styles.containerModal}>
-        <div className={styles.containerModalCross}>
-          <Image
-            id="closeIcon"
-            src="/icon-close.svg"
-            alt="CLOSE ICON"
-            width={40}
-            height={40}
-          />
+        <div className={styles.containerModalClose}>
+          <CloseIcon onClick={onClose}>
+            <Image
+              id="closeIcon"
+              src="/icon-close.svg"
+              alt="CLOSE ICON"
+              width={40}
+              height={40}
+            />
+          </CloseIcon>
         </div>
         <div className={styles.containerModalHeading}>
           <h1>{title}</h1>
@@ -51,7 +55,7 @@ export const Modal: React.FC<Props> = ({
         </div>
         <div className={styles.containerModalContent}>{children}</div>
         <div className={styles.containerModalActions}>
-          <Button onClick={onClick} text='Play again' />
+          <Button onClick={onClose}>{buttonText}</Button>
         </div>
       </div>
     </div>

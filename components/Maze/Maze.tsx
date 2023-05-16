@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 
-import { Modal } from "@/components/Modal";
+import { CongratsModal } from "./components";
 import _isEqual from "lodash.isequal";
 import classNames from "classnames";
 import styles from "./Maze.module.scss";
@@ -143,19 +143,7 @@ export const Maze: React.FC = () => {
         </table>
       </div>
       {gameStatus === GameStatusEnum.FINISHED && (
-        <Modal
-          title="Amazing, you won!"
-          subtitle={`You solved the maze in ${moves} moves`}
-          onClick={resetGame}
-          onClose={resetGame}
-        >
-          <Image
-            src="/icon-party.svg"
-            alt="PARTY ICON"
-            width={250}
-            height={250}
-          />
-        </Modal>
+        <CongratsModal resetGame={resetGame} moves={moves} />
       )}
     </>
   );
