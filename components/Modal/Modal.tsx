@@ -41,8 +41,8 @@ export const Modal: React.FC<Props> = ({
             id="closeIcon"
             src="/icon-close.svg"
             alt="CLOSE ICON"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
           />
         </div>
         <div className={styles.containerModalHeading}>

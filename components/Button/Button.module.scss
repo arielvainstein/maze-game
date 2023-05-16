@@ -1,4 +1,14 @@
 .button {
-    width: fit-content;
-    max-width: 300px;
+    max-width: 12rem;
+    background-color: var(--color-primary-rgb);
+    padding: var(--space-s) var(--space-l);
+    color: var(--font-color-primary);
+    border-radius: .2rem;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: var(--color-primary-rgb-hover);
+    }
 }
