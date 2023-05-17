@@ -32,6 +32,7 @@ export const Modal: React.FC<Props> = ({
       window.removeEventListener('keydown', () =>
         console.log('unmounted component')
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

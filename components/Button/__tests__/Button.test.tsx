@@ -18,7 +18,6 @@ describe('Button component', () => {
 
     const button = screen.getByText('Some random text');
 
-    screen.logTestingPlaygroundURL();
-    expect(button).toBeDefined();
+    expect(button).toBeInTheDocument();
   });
 });
