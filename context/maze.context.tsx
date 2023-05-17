@@ -1,6 +1,6 @@
 import { useState, createContext } from 'react';
 
-interface MazeContextInterface {
+export interface MazeContextInterface {
 	maze: number[][];
 	moves: number;
 	submitGame: () => Promise<Response>;
@@ -12,8 +12,6 @@ export const MazeContext = createContext<MazeContextInterface>(
 );
 
 export const MazeProvider = ({ children }: any) => {
-	// Consider moving hooks to maze component so that this context
-	// can behave like a server component instead
 	const [moves, setMoves] = useState(0);
 
 	// This could be a GET method from mocky too

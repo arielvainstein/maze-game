@@ -9,7 +9,7 @@ type Props = {
 
 export const CloseIcon: React.FC<Props> = ({ children, onClick }) => {
 	return (
-		<button onClick={onClick} className={styles.button}>
+		<button type='button' onClick={onClick} className={styles.button}>
 			{children}
 		</button>
 	);

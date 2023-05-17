@@ -4,8 +4,11 @@
 		"React": "readonly"
 	},
 	"rules": {
-		"no-unused-vars": "off",
-		"no-console": "error"
+		"react-hooks/rules-of-hooks": "warn",
+		"no-console": "warn",
+		"react/button-has-type": "error",
+		"react/react-in-jsx-scope": "error",
+		"react-hooks/exhaustive-deps": "off"
 	},
 	"overrides": [
 		{

@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo, useEffect, useRef, useContext } from 'react';
-import { MazeContext } from '@/context';
+import { MazeContext, MazeContextInterface } from '@/context';
 import { useMutation } from 'react-query';
 
 import { Loading } from '@/components';
@@ -16,23 +15,22 @@ enum GameStatusEnum {
 }
 
 export const Maze: React.FC = () => {
-	const url = 'winner.mp3';
-	const mazeContext = useContext(MazeContext);
-	const { maze, moves, submitGame, setMoves } = mazeContext;
+	const winnerAudioUrl = 'winner.mp3';
+	const { maze, moves, submitGame, setMoves } =
+		useContext<MazeContextInterface>(MazeContext);
 
 	const { mutate: submitGameMutate, isLoading } = useMutation(submitGame, {
 		onSuccess: () => {
 			setGameStatus(GameStatusEnum.FINISHED);
 			audioRef?.current?.play();
 		},
-		// TODO: Create error snackbar
 		// eslint-disable-next-line no-console
 		onError: () => console.log('Something failed, try again.'),
 	});
 
 	const tableRef = useRef<any>(null);
 	const audioRef = useRef<HTMLAudioElement | undefined>(
-		typeof Audio !== 'undefined' ? new Audio(url) : undefined
+		typeof Audio !== 'undefined' ? new Audio(winnerAudioUrl) : undefined
 	);
 
 	const mazeExits = useMemo(() => getMazeStartAndFinishPoints(maze), [maze]);

@@ -12,7 +12,9 @@ const Error: React.FC<Props> = ({ error, reset }) => (
 	<div className={styles.error}>
 		<h3>An error occured!</h3>
 		<p>{error.message}</p>
-		<button onClick={reset}>Retry</button>
+		<button type='button' onClick={reset}>
+			Retry
+		</button>
 	</div>
 );
 
