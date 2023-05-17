@@ -30,13 +30,14 @@ export const Modal: React.FC<Props> = ({
 
     return () =>
       window.removeEventListener('keydown', () =>
+        // eslint-disable-next-line no-console
         console.log('unmounted component')
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div data-testid='modal' className={styles.container}>
+    <div data-testid="modal" className={styles.container}>
       <div className={styles.containerModal}>
         <div className={styles.containerModalClose}>
           <CloseIcon onClick={onClose}>
