@@ -11,8 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "jest --coverage",
     "prettier": "prettier --write .",
     "prepare": "husky install"
   },
