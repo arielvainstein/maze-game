@@ -1,53 +1,53 @@
 .status1 {
-  width: var(--space-doubleXxl);
-  height: var(--space-doubleXl);
-  min-width: var(--space-doubleXl);
-  min-height: var(--space-doubleXl);
-  background-color: var(--color-secondary-rgb);
+	width: var(--space-doubleXxl);
+	height: var(--space-doubleXl);
+	min-width: var(--space-doubleXl);
+	min-height: var(--space-doubleXl);
+	background-color: var(--color-secondary-rgb);
 }
 
 .status0 {
-  width: var(--space-doubleXxl);
-  height: var(--space-doubleXl);
-  min-width: var(--space-doubleXl);
-  min-height: var(--space-doubleXl);
-  background-color: var(--font-color-special-black);
+	width: var(--space-doubleXxl);
+	height: var(--space-doubleXl);
+	min-width: var(--space-doubleXl);
+	min-height: var(--space-doubleXl);
+	background-color: var(--font-color-special-black);
 }
 
 .maze {
-  background-color: var(--color-secondary-rgb);
-  width: 1200px;
-  margin: 0 auto;
+	background-color: var(--color-secondary-rgb);
+	width: 1200px;
+	margin: 0 auto;
 
-  @media screen and (max-width: 1200px) {
-    width: 100%;
-  }
+	@media screen and (max-width: 1200px) {
+		width: 100%;
+	}
 }
 
 .currentStep {
-  background-color: var(--color-primary-rgb);
-  border-radius: var(--space-doubleXl);
-  max-width: 25px;
-  max-height: 25px;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  animation: pulse 1s infinite;
-  text-align: center;
+	background-color: var(--color-primary-rgb);
+	border-radius: var(--space-doubleXl);
+	max-width: 25px;
+	max-height: 25px;
+	width: 50%;
+	height: 50%;
+	margin: auto;
+	animation: pulse 1s infinite;
+	text-align: center;
 }
 
 .moves {
-  width: 100%;
-  text-align: right;
-  margin-bottom: var(--space-xs);
-  margin-top: var(--space-l);
+	width: 100%;
+	text-align: right;
+	margin-bottom: var(--space-xs);
+	margin-top: var(--space-l);
 }
 
 @keyframes pulse {
-  0% {
-    background-color: var(--color-primary-rgb);
-  }
-  100% {
-    background-color: var(--color-secondary-rgb);
-  }
+	0% {
+		background-color: var(--color-primary-rgb);
+	}
+	100% {
+		background-color: var(--color-secondary-rgb);
+	}
 }

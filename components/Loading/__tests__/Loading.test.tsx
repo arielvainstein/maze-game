@@ -5,20 +5,20 @@ import { render, screen } from '@testing-library/react';
 import { Loading } from '@/components';
 
 jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    return <img {...props} />
-  },
-}))
+	__esModule: true,
+	default: (props: any) => {
+		return <img {...props} />;
+	},
+}));
 
 describe('Loading component', () => {
-  it('renders a Loading spinner', () => {
-    render(<Loading />);
+	it('renders a Loading spinner', () => {
+		render(<Loading />);
 
-    const spinner = screen.getByRole('img', {
-      name: /loading icon/i
-    });
+		const spinner = screen.getByRole('img', {
+			name: /loading icon/i,
+		});
 
-    expect(spinner).toBeInTheDocument();
-  });
+		expect(spinner).toBeInTheDocument();
+	});
 });

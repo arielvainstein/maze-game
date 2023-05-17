@@ -1,18 +1,18 @@
 {
-  "extends": ["next", "next/core-web-vitals"],
-  "globals": {
-    "React": "readonly"
-  },
-  "rules": {
-    "no-unused-vars": "off",
-    "no-console": "error"
-  },
-  "overrides": [
-    {
-      "files": ["**/*.test.ts", "**/*.test.tsx"],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
+	"extends": ["next", "next/core-web-vitals"],
+	"globals": {
+		"React": "readonly"
+	},
+	"rules": {
+		"no-unused-vars": "off",
+		"no-console": "error"
+	},
+	"overrides": [
+		{
+			"files": ["**/*.test.ts", "**/*.test.tsx"],
+			"env": {
+				"jest": true
+			}
+		}
+	]
 }
