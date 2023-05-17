@@ -25,6 +25,8 @@ export const Maze: React.FC = () => {
       setGameStatus(GameStatusEnum.FINISHED);
       audioRef?.current?.play();
     },
+    // TODO: Create error snackbar
+    // eslint-disable-next-line no-console
     onError: () => console.log('Something failed, try again.'),
   });
 
