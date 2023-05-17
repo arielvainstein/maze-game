@@ -15,24 +15,16 @@ enum GameStatusEnum {
 }
 
 export const Maze: React.FC = () => {
-	const winnerAudioUrl = 'winner.mp3';
 	const { maze, moves, submitGame, setMoves } =
 		useContext<MazeContextInterface>(MazeContext);
 
 	const { mutate: submitGameMutate, isLoading } = useMutation(submitGame, {
-		onSuccess: () => {
-			setGameStatus(GameStatusEnum.FINISHED);
-			audioRef?.current?.play();
-		},
+		onSuccess: () => setGameStatus(GameStatusEnum.FINISHED),
 		// eslint-disable-next-line no-console
 		onError: () => console.log('Something failed, try again.'),
 	});
 
 	const tableRef = useRef<any>(null);
-	const audioRef = useRef<HTMLAudioElement | undefined>(
-		typeof Audio !== 'undefined' ? new Audio(winnerAudioUrl) : undefined
-	);
-
 	const mazeExits = useMemo(() => getMazeStartAndFinishPoints(maze), [maze]);
 	const [currentPosition, setCurrentPosition] = useState<number[]>([]);
 	const [gameStatus, setGameStatus] = useState<GameStatusEnum>(
