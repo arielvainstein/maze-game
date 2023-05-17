@@ -1,34 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Maze game
 
-## Getting Started
+This is a game made with NextJS v13 and typescript.
 
-First, run the development server:
+![Maze game](https://iili.io/HUQzUMB.png "Maze game")
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
+If this is the first time you run this app, make sure you have installed dependencies with `npm install`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To run this project in development mode, run: `npm run dev`.
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Build and run in local environment
+To run locally you build bundle, run `npm run build` and run your production ready app with `npm run start`. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Assets
+All assets in this app are hosted inside `/public. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Unit Testing
+This app uses [Jest](https://jestjs.io/) + [React testing library](https://testing-library.com/) for unit testing. To run all the suit test just run `npm run test`. 
 
-## Deploy on Vercel
+## Commits quality check
+Every commit to this app runs Husky pre-commit by default. This Husky check is in charge of running prettier and eslint on every `.ts`, `.tsx` and `.scss` file before pushing code to the repo.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To avoid pre-commit checks you can´t commit files with the flag `--no-verify`. (not recommended)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To install Husky Git Hooks please run `npm run prepare`. 
