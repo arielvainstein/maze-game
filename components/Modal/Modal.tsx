@@ -29,10 +29,10 @@ export const Modal: React.FC<Props> = ({
 		});
 
 		return () =>
-			window.removeEventListener('keydown', () =>
+			window.removeEventListener('keydown', () => {
 				// eslint-disable-next-line no-console
-				console.log('unmounted component')
-			);
+				console.log('unmounted component');
+			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

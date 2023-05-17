@@ -8,15 +8,6 @@ type Props = {
 	className?: string;
 };
 
-export const Button: React.FC<Props> = ({ onClick, children }, props) => {
-	return (
-		<button
-			type='button'
-			className={styles.button}
-			onClick={onClick}
-			{...props}
-		>
-			{children}
-		</button>
-	);
+export const Button: React.FC<Props> = (props) => {
+	return <button type='button' className={styles.button} {...props} />;
 };
