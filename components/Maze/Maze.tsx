@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo, useEffect, useRef, useContext } from 'react';
 import { MazeContext } from '@/context';
 import { useMutation } from 'react-query';
@@ -15,21 +16,23 @@ enum GameStatusEnum {
 }
 
 export const Maze: React.FC = () => {
+  const url = 'winner.mp3';
   const mazeContext = useContext(MazeContext);
   const { maze, moves, submitGame, setMoves } = mazeContext;
+
   const { mutate: submitGameMutate, isLoading } = useMutation(submitGame, {
     onSuccess: () => {
       setGameStatus(GameStatusEnum.FINISHED);
-      audioRef.current.play();
+      audioRef?.current?.play();
     },
-    onError: () => {
-      console.log('Something failed, try again.');
-    },
+    onError: () => console.log('Something failed, try again.'),
   });
 
-  const url = 'winner.mp3';
+  const tableRef = useRef<any>(null);
+  const audioRef = useRef<HTMLAudioElement | undefined>(
+    typeof Audio !== 'undefined' ? new Audio(url) : undefined
+  );
 
-  const audioRef = useRef(new Audio(url));
   const mazeExits = useMemo(() => getMazeStartAndFinishPoints(maze), [maze]);
   const [currentPosition, setCurrentPosition] = useState<number[]>([]);
   const [gameStatus, setGameStatus] = useState<GameStatusEnum>(
@@ -40,6 +43,7 @@ export const Maze: React.FC = () => {
     if (mazeExits?.length === 2) {
       setCurrentPosition(mazeExits[0]);
     }
+    tableRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -88,14 +92,15 @@ export const Maze: React.FC = () => {
           <span>Moves: {moves}</span>
         </div>
         <table
+          data-testid="maze"
+          ref={tableRef}
           onKeyDown={handleMove}
-          autoFocus
           tabIndex={0}
           className={styles.maze}
         >
           <tbody>
             {maze.map((row, i) => (
-              <tr key={`row-${i}`}>
+              <tr key={`row-${i}`} data-testid="mazeRow">
                 {row.map((cell, j) => (
                   <td
                     key={`cell-${i}-${j}`}

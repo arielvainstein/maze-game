@@ -36,7 +36,7 @@ export const Modal: React.FC<Props> = ({
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div data-testid='modal' className={styles.container}>
       <div className={styles.containerModal}>
         <div className={styles.containerModalClose}>
           <CloseIcon onClick={onClose}>
