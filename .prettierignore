@@ -4,3 +4,5 @@ node_modules
 package.json
 .next
 .swc
+package-lock.json
+README.md
