@@ -1,14 +1,14 @@
 .button {
-    max-width: 12rem;
-    background-color: var(--color-primary-rgb);
-    padding: var(--space-s) var(--space-l);
-    color: var(--font-color-primary);
-    border-radius: .2rem;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
+  max-width: 12rem;
+  background-color: var(--color-primary-rgb);
+  padding: var(--space-s) var(--space-l);
+  color: var(--font-color-primary);
+  border-radius: 0.2rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
 
-    &:hover {
-        background-color: var(--color-primary-rgb-hover);
-    }
+  &:hover {
+    background-color: var(--color-primary-rgb-hover);
+  }
 }

@@ -1,11 +1,10 @@
-"use client";
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import Image from "next/image";
-import { Button } from "@/components/Button";
-import { CloseIcon } from "./components/CloseIcon";
+import Image from 'next/image';
+import { Button } from '@/components/Button';
+import { CloseIcon } from './components/CloseIcon';
 
-import styles from "./Modal.module.scss";
+import styles from './Modal.module.scss';
 
 type Props = {
   children: React.ReactNode;
@@ -23,15 +22,15 @@ export const Modal: React.FC<Props> = ({
   buttonText,
 }) => {
   useEffect(() => {
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" || e.key === "Enter") {
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Enter') {
         onClose();
       }
     });
 
     return () =>
-      window.removeEventListener("keydown", () =>
-        console.log("unmounted component")
+      window.removeEventListener('keydown', () =>
+        console.log('unmounted component')
       );
   }, []);
 

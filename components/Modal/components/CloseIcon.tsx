@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./CloseIcon.styles.module.scss";
+import styles from './CloseIcon.styles.module.scss';
 
 type Props = {
   children: React.ReactNode;

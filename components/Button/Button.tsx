@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./Button.module.scss";
+import styles from './Button.module.scss';
 
 type Props = {
   onClick: () => void;
@@ -10,7 +10,12 @@ type Props = {
 
 export const Button: React.FC<Props> = ({ onClick, children }, props) => {
   return (
-    <button type="button" className={styles.button} onClick={onClick} {...props}>
+    <button
+      type="button"
+      className={styles.button}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );

@@ -37,6 +37,7 @@
 }
 
 .moves {
+  width: 100%;
   text-align: right;
   margin-bottom: var(--space-xs);
   margin-top: var(--space-l);
@@ -50,4 +51,3 @@
     background-color: var(--color-secondary-rgb);
   }
 }
-

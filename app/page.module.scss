@@ -6,3 +6,13 @@
   padding: 6rem;
   min-height: 100vh;
 }
+
+.error {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--font-color-special-black);
+  padding: 50px;
+}

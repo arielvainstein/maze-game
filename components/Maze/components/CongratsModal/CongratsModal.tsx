@@ -1,7 +1,7 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
-import { Modal } from "@/components/Modal";
+import { Modal } from '@/components/Modal';
 
 type Props = {
   resetGame: () => void;

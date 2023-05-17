@@ -1,0 +1,6 @@
+public
+coverage
+node_modules
+package.json
+.next
+.swc

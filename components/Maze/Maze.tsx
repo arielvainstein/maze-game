@@ -1,60 +1,37 @@
-"use client";
-import React, { useState, useMemo, useEffect } from "react";
-import Image from "next/image";
+import React, { useState, useMemo, useEffect, useRef, useContext } from 'react';
+import { MazeContext } from '@/context';
+import { useMutation } from 'react-query';
 
-import { CongratsModal } from "./components";
-import _isEqual from "lodash.isequal";
-import classNames from "classnames";
-import styles from "./Maze.module.scss";
+import { Loading } from '@/components';
+import { CongratsModal } from './components';
+import { getMazeStartAndFinishPoints } from './utils';
+import _isEqual from 'lodash.isequal';
+import classNames from 'classnames';
+import styles from './Maze.module.scss';
 
 enum GameStatusEnum {
-  PLAYING = "playing",
-  FINISHED = "finished",
+  PLAYING = 'playing',
+  FINISHED = 'finished',
 }
 
-const maze = [
-  [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0],
-  [0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0],
-  [0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0],
-  [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
-
-const getMazeStartAndFinishPoints = () => {
-  let indexes: number[][] = [];
-
-  const topEscapeIndex = maze[0].findIndex((el) => el === 1);
-  const bottomEscapeIndex = maze[maze.length - 1].findIndex((el) => el === 1);
-  const leftEscapeIndex = maze.findIndex((row) => row[0] === 1);
-  const rightEscapeIndex = maze.findIndex((row) => row[row.length - 1] === 1);
-
-  if (topEscapeIndex && topEscapeIndex !== -1) {
-    indexes.push([0, topEscapeIndex]);
-  }
-  if (bottomEscapeIndex && bottomEscapeIndex !== -1) {
-    indexes.push([maze.length - 1, bottomEscapeIndex]);
-  }
-  if (leftEscapeIndex && leftEscapeIndex !== -1) {
-    indexes.push([leftEscapeIndex, 0]);
-  }
-  if (rightEscapeIndex && rightEscapeIndex !== -1) {
-    indexes.push([rightEscapeIndex, 11]);
-  }
-
-  return indexes;
-};
-
 export const Maze: React.FC = () => {
-  const mazeExits = useMemo(() => getMazeStartAndFinishPoints(), [maze]);
+  const mazeContext = useContext(MazeContext);
+  const { maze, moves, submitGame, setMoves } = mazeContext;
+  const { mutate: submitGameMutate, isLoading } = useMutation(submitGame, {
+    onSuccess: () => {
+      setGameStatus(GameStatusEnum.FINISHED);
+      audioRef.current.play();
+    },
+    onError: () => {
+      console.log('Something failed, try again.');
+    },
+  });
+
+  const url = 'winner.mp3';
+
+  const audioRef = useRef(new Audio(url));
+  const mazeExits = useMemo(() => getMazeStartAndFinishPoints(maze), [maze]);
   const [currentPosition, setCurrentPosition] = useState<number[]>([]);
-  const [moves, setMoves] = useState(0);
   const [gameStatus, setGameStatus] = useState<GameStatusEnum>(
     GameStatusEnum.PLAYING
   );
@@ -68,7 +45,7 @@ export const Maze: React.FC = () => {
   useEffect(() => {
     const iWon = _isEqual(currentPosition, mazeExits[1]);
     if (iWon) {
-      setGameStatus(GameStatusEnum.FINISHED);
+      submitGameMutate();
     }
   }, [currentPosition]);
 
@@ -86,19 +63,19 @@ export const Maze: React.FC = () => {
 
     const [i, j] = currentPosition;
 
-    if (key === "ArrowUp" && !!maze[i - 1] && maze[i - 1][j] === 1) {
+    if (key === 'ArrowUp' && !!maze[i - 1] && maze[i - 1][j] === 1) {
       setCurrentPosition([i - 1, j]);
       setMoves((moves) => (moves += 1));
     }
-    if (key === "ArrowRight" && maze[i][j + 1] === 1) {
+    if (key === 'ArrowRight' && maze[i][j + 1] === 1) {
       setCurrentPosition([i, j + 1]);
       setMoves((moves) => (moves += 1));
     }
-    if (key === "ArrowDown" && !!maze[i + 1] && maze[i + 1][j] === 1) {
+    if (key === 'ArrowDown' && !!maze[i + 1] && maze[i + 1][j] === 1) {
       setCurrentPosition([i + 1, j]);
       setMoves((moves) => (moves += 1));
     }
-    if (key === "ArrowLeft" && maze[i][j - 1] === 1) {
+    if (key === 'ArrowLeft' && maze[i][j - 1] === 1) {
       setCurrentPosition([i, j - 1]);
       setMoves((moves) => (moves += 1));
     }
@@ -107,11 +84,6 @@ export const Maze: React.FC = () => {
   return (
     <>
       <div>
-        <h1>Maze game</h1>
-        <p>
-          Use your keyboard arrows to navigate through the maze and get to the
-          exit.
-        </p>
         <div className={styles.moves}>
           <span>Moves: {moves}</span>
         </div>
@@ -142,6 +114,7 @@ export const Maze: React.FC = () => {
           </tbody>
         </table>
       </div>
+      {isLoading && <Loading />}
       {gameStatus === GameStatusEnum.FINISHED && (
         <CongratsModal resetGame={resetGame} moves={moves} />
       )}
